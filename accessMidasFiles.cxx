@@ -69,8 +69,8 @@ public:
     //Perform things before the start of the analysis of the file
     //Create tree, branches, etc.
 
-TOF1 = new TH1D("TOF1","",1000,-2000,2000);
-TOF2 = new TH1D("TOF2","",1000,-2000,2000);
+TOF1 = new TH1D("TOF1","",1000,100,600);
+TOF2 = new TH1D("TOF2","",1000,-300,300);
 
       //histo = new TH2D("histo","",1000,0,20000.,1000,0,8280.);
       Crystal = new TH1D("Crystal","",1000,-2000,2000);
@@ -94,7 +94,7 @@ TOF2 = new TH1D("TOF2","",1000,-2000,2000);
 
   //histo->Write();
   //TOF->Write();
-  TFile *f = new TFile("./Draw.root","recreate");
+  /*TFile *f = new TFile("./Draw.root","recreate");
   f->cd();
   TOF1->Write();
   TOF2->Write();
@@ -106,7 +106,7 @@ TOF2 = new TH1D("TOF2","",1000,-2000,2000);
   Belle2->Write();
   std::cout << "HERE?" << std::endl;
   f->Write();
-  /*for(int y=0;y<MyGraphs.size();y++){
+  for(int y=0;y<MyGraphs.size();y++){
     std::cout << "Writing Graph:" << y << std::endl;
     MyGraphs[y]->Write();
   }*/
@@ -148,10 +148,14 @@ TOF2 = new TH1D("TOF2","",1000,-2000,2000);
           if(sample > max) {
             max = sample;
             stop[i] = iSample;
+            TOF1->Fill(measurements[1].GetSample(iSample) - measurements[5].GetSample(iSample));
+            TOF1->Fill(measurements[2].GetSample(iSample) - measurements[5].GetSample(iSample));
+            TOF1->Fill(measurements[1].GetSample(iSample) - measurements[4].GetSample(iSample));
+            TOF1->Fill(measurements[2].GetSample(iSample) - measurements[4].GetSample(iSample));
           }
 
             //histo->Fill(iSample,sample);
-            //TOF->Fill(measurements[3].GetSample(iSample) - measurements[4].GetSample(iSample));
+
             //Crystal->Fill(iSample,measurements[0].GetSample(iSample));
             //Upstream->Fill(iSample,measurements[1].GetSample(iSample));
             //Middle->Fill(iSample,measurements[2].GetSample(iSample));
@@ -173,8 +177,10 @@ TOF2 = new TH1D("TOF2","",1000,-2000,2000);
       Downstream1->Fill(stop[3]);
       Downstream2->Fill(stop[4]);
       Belle2->Fill(stop[5]);
-      TOF1->Fill(stop[1]-stop[5]);
-      TOF2->Fill(stop[2]-stop[5]);
+      //TOF1->Fill(stop[1]-stop[5]);
+      //TOF1->Fill(stop[2]-stop[5]);
+      //TOF1->Fill(stop[1]-stop[4]);
+      //TOF1->Fill(stop[2]-stop[4]);
 
   //for(int y=0;y<MyGraphs.size();y++){
     //std::cout << "Writing Graph:" << y << std::endl;
